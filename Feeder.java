@@ -1,5 +1,3 @@
-import java.util.random.RandomGenerator;
-
 public class Feeder {
 
     /**
@@ -15,11 +13,15 @@ public class Feeder {
      * feeder, as described in part (a) Precondition: numBirds > 0
      */
     public void simulateOneDay(int numBirds)
-    {/*
-        if (Math.random() < .05) currentFood =0;
+    {
+        if (Math.random() < 0.05) currentFood =0;
         else
-            currentFood = numBirds * (int)(Math.random()*39 + 11);
-        }*/
+        {
+            int eaten = (int) (Math.random()*40) + 11;
+            eaten*= numBirds;
+            currentFood -= eaten;
+            if (currentFood < 0) currentFood =0;
+        }
     }
     public int getCurrentFood(){
         return currentFood;
@@ -31,8 +33,14 @@ public class Feeder {
      */
     public int simulateManyDays(int numBirds, int numDays) 
     {
-
-        return 0;
+        int days = 0;
+        while (numDays > 0){
+            if (currentFood ==0) return days;
+            simulateOneDay(numBirds);
+            numDays--;
+            days ++;
+        }
+        return days;
     }
 
 }
